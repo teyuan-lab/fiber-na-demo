@@ -28,13 +28,13 @@ function draw(){
  if(!m.valid){$('status').className='warn';$('status').textContent='Use 1 ≤ n₂ < n₁ ≤ 2.5 to create a guiding core.';$('diagram').innerHTML='';for(const id of ['na','accept','critical','internal','boundary','out'])$(id).textContent='—';return;}
  $('na').textContent=m.na.toFixed(4);$('accept').textContent=deg(m.acceptance);$('critical').textContent=deg(m.critical);$('internal').textContent=deg(m.beta);$('boundary').textContent=deg(m.incidence);
  let s='',line=(x,y,X,Y,color='#16a779',dash='',w=3)=>`<line x1="${x}" y1="${y}" x2="${X}" y2="${Y}" stroke="${color}" stroke-width="${w}" ${dash?'stroke-dasharray="'+dash+'"':''}/>`;
- const text=(x,y,t)=>`<text x="${x}" y="${y}">${t}</text>`,L=230,R=840,T=212,B=268,C=240;
+ const text=(x,y,t)=>`<text x="${x}" y="${y}">${t}</text>`,L=230,R=840,T=226,B=254,C=240;
  // Both cones use the same radial length; their angle is never visually clamped.
  const coneX=150*Math.cos(m.acceptance*rad),coneY=150*Math.sin(m.acceptance*rad);
- s+=`<rect x="${L}" y="196" width="610" height="88" rx="8" fill="#e8f0f8" stroke="#c3d5e5"/><rect x="${L}" y="${T}" width="610" height="56" fill="#e4f7ed" stroke="#68b695"/>`;
+ s+=`<rect x="${L}" y="218" width="610" height="44" rx="8" fill="#e8f0f8" stroke="#c3d5e5"/><rect x="${L}" y="${T}" width="610" height="28" fill="#e4f7ed" stroke="#68b695"/>`;
  s+=`<path d="M ${L} ${C} L ${L-coneX} ${C-coneY} L ${L-coneX} ${C+coneY} Z" fill="#3987c3" opacity=".09"/>`;
  s+=line(L-coneX,C-coneY,L,C,'#72a3c5','6 5',1.5)+line(L-coneX,C+coneY,L,C,'#72a3c5','6 5',1.5)+line(40,C,1080,C,'#9eb4c5','7 6',1);
- s+=text(430,185,`Cladding n₂ = ${n2}`)+text(435,320,`Core n₁ = ${n1}`)+text(50,405,'Air n₀ = 1')+text(80,105,'Acceptance cone')+text(890,105,'Output cone');
+ s+=text(430,205,`Cladding n₂ = ${n2}`)+text(435,290,`Core n₁ = ${n1}`)+text(50,405,'Air n₀ = 1')+text(80,105,'Acceptance cone')+text(890,105,'Output cone');
  const dx=150*Math.cos(angle*rad),dy=150*Math.sin(angle*rad);
  s+=line(L-dx,C+dy,L,C,'#287ebb','',4)+text(50,450,`θin = ${deg(angle)}`);
  const reflectance=fresnelReflectance(m.incidence,n1,n2);
@@ -57,6 +57,8 @@ $('reset').onclick=()=>{$('angle').value=0;$('core').value=1.5;$('clad').value=1
 $('edge').onclick=()=>{let m=fiberModel(0,+$('core').value,+$('clad').value);if(m.valid){$('angle').value=m.acceptance;draw();}};
 $('leak').onclick=()=>{let m=fiberModel(0,+$('core').value,+$('clad').value);if(m.valid){$('angle').value=Math.min(85,m.acceptance+12);draw();}};draw();
 
+
 </script></body></html>
+
 
 
